@@ -12,7 +12,9 @@ img.addEventListener('load', () => {
 
   // console.log(img.src);
   context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+  context.rect(0, 0, context.canvas.width, context.canvas.height);
   context.fillStyle = "#000000";
+  context.fill();
   let dimensions = getDimensions(context.canvas.width, context.canvas.height, img.width, img. height);
   context.drawImage(img, dimensions.width, dimensions.height, dimensions.startX, dimensions.startY);
   console.log(dimensions);
