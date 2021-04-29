@@ -115,6 +115,7 @@ function clear() {
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     document.getElementById('text-top').value = "";
     document.getElementById('text-bottom').value = "";
+    imageInput.value = "";
 
     let buttonsToActivate = document.getElementById("button-group").children;
     for (var i = 0; i < buttonsToActivate.length; i++) {
