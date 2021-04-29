@@ -6,8 +6,8 @@
 
 ## Part 1:
 
-LINK TO YOUR PUBLISHED SITE
+https://thetz.github.io/Lab5/
 
 ## Part 2:
 
-LINK TO YOUR PART 2 REPOSITORY
+https://github.com/thetz/github-actions-for-ci.git
