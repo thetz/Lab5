@@ -11,13 +11,14 @@ img.addEventListener('load', () => {
   // TODO
 
   // console.log(img.src);
-  context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-  context.rect(0, 0, context.canvas.width, context.canvas.height);
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.rect(0, 0, canvas.width, canvas.height);
   context.fillStyle = "#000000";
   context.fill();
-  let dimensions = getDimensions(context.canvas.width, context.canvas.height, img.width, img. height);
-  context.drawImage(img, dimensions.width, dimensions.height, dimensions.startX, dimensions.startY);
-  console.log(dimensions);
+
+  let dimensions = getDimensions(canvas.width, canvas.height, img.width, img. height);
+  context.drawImage(img, dimensions.startX, dimensions.startY, dimensions.width, dimensions.height);
+  // console.log(dimensions);
   // Some helpful tips:
   // - Fill the whole Canvas with black first to add borders on non-square images, then draw on top
   // - Clear the form when a new image is selected
@@ -25,10 +26,10 @@ img.addEventListener('load', () => {
 });
 
 imageInput.addEventListener("input", () => {
-  // console.log(imageInput.files[0]);
-  img.src = URL.createObjectURL(imageInput.files[0]);
+  console.log(imageInput.files[0]);
+  img.src = URL.createObjectURL(imageInput.files.item(0));
   img.alt = imageInput.files[0].name;
-  // console.log(img.alt);
+  console.log(img.src);
 });
 
 form.addEventListener('submit', (event) => {
