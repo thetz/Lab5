@@ -83,13 +83,13 @@ clear();
 speak();
 populateVoiceList();
 
+var volume=1;
 function soundiconchange() {
   var out = document.getElementsByTagName("input")[3];
-  var i;
-
-  out.addEventListener("input", () => {
-    i = out.value;
-    volume_update(i);
+    out.addEventListener("input", () => {
+    volume = out.value;
+    volume_update(volume);
+    volume = volume/100;
   }, false);
 }
 
@@ -144,6 +144,7 @@ function speak() {
           utterThis.voice = voices[i];
         }
       }
+      utterThis.volume=volume;
       synth.speak(utterThis);
     }
 
