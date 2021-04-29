@@ -10,7 +10,6 @@ const form = document.getElementById("generate-meme");
 img.addEventListener('load', () => {
   // TODO
 
-  // console.log(img.src);
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.rect(0, 0, canvas.width, canvas.height);
   context.fillStyle = "#000000";
@@ -18,7 +17,9 @@ img.addEventListener('load', () => {
 
   let dimensions = getDimensions(canvas.width, canvas.height, img.width, img. height);
   context.drawImage(img, dimensions.startX, dimensions.startY, dimensions.width, dimensions.height);
-  // console.log(dimensions);
+
+
+
   // Some helpful tips:
   // - Fill the whole Canvas with black first to add borders on non-square images, then draw on top
   // - Clear the form when a new image is selected
@@ -26,10 +27,8 @@ img.addEventListener('load', () => {
 });
 
 imageInput.addEventListener("input", () => {
-  console.log(imageInput.files[0]);
-  img.src = URL.createObjectURL(imageInput.files.item(0));
+  img.src = URL.createObjectURL(imageInput.files[0]);
   img.alt = imageInput.files[0].name;
-  console.log(img.src);
 });
 
 form.addEventListener('submit', (event) => {
@@ -38,13 +37,10 @@ form.addEventListener('submit', (event) => {
   let textTop = document.getElementById("text-top").value;
   let textBottom = document.getElementById("text-bottom").value;
 
-  // console.log(textTop);
-
   context.font = "48px serif";
   context.textAlign = "center";
   context.fillText(textTop, context.canvas.width/2, 35);
   context.fillText(textBottom, context.canvas.width/2, context.canvas.height - 35);
-
 
   let buttonsToActivate = document.getElementById("button-group").children;
   for(var i = 0; i < buttonsToActivate.length; i ++){
