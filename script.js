@@ -5,16 +5,14 @@ const img = new Image(); // used to load image from <input> and draw to canvas
 const imageInput = document.getElementById("image-input");
 const form = document.getElementById("generate-meme");
 
-
 // Fires whenever the img object loads a new image (such as with img.src =)
 img.addEventListener('load', () => {
-
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.rect(0, 0, canvas.width, canvas.height);
   context.fillStyle = "#000000";
   context.fill();
 
-  let dimensions = getDimensions(canvas.width, canvas.height, img.width, img. height);
+  let dimensions = getDimensions(canvas.width, canvas.height, img.width, img.height);
   context.drawImage(img, dimensions.startX, dimensions.startY, dimensions.width, dimensions.height);
 });
 
@@ -25,17 +23,17 @@ imageInput.addEventListener("input", () => {
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
-  
+
   let textTop = document.getElementById("text-top").value;
   let textBottom = document.getElementById("text-bottom").value;
 
   context.font = "48px serif";
   context.textAlign = "center";
-  context.fillText(textTop, context.canvas.width/2, 35);
-  context.fillText(textBottom, context.canvas.width/2, context.canvas.height - 35);
+  context.fillText(textTop, context.canvas.width / 2, 35);
+  context.fillText(textBottom, context.canvas.width / 2, context.canvas.height - 35);
 
   let buttonsToActivate = document.getElementById("button-group").children;
-  for(var i = 0; i < buttonsToActivate.length; i ++){
+  for (var i = 0; i < buttonsToActivate.length; i++) {
     buttonsToActivate[i].disabled = false;
   }
   document.querySelector('button[type=submit]').disabled = true;
@@ -85,50 +83,41 @@ clear();
 speak();
 populateVoiceList();
 
-function soundiconchange(){
+function soundiconchange() {
   var out = document.getElementsByTagName("input")[3];
   var i;
-  // out.addEventListener('mousedown', e => {
-  //   i= out.value;
-  //   volume_update(i);
-  // });
 
   out.addEventListener("input", () => {
     i = out.value;
     volume_update(i);
-}, false);
-
-
+  }, false);
 }
 
-function volume_update(volume){
+function volume_update(volume) {
   var vol_icon = document.getElementsByTagName("img")[0];
-  if(volume == 0){
+  if (volume == 0) {
     vol_icon.src = "./icons/volume-level-0.svg";
   }
-  else if (volume < 33) { 
+  else if (volume < 33) {
     vol_icon.src = "./icons/volume-level-1.svg";
-   }
-  else if (volume < 66) { 
-    vol_icon.src = "./icons/volume-level-2.svg"; 
   }
-  else { 
-    vol_icon.src = "./icons/volume-level-3.svg"; 
+  else if (volume < 66) {
+    vol_icon.src = "./icons/volume-level-2.svg";
+  }
+  else {
+    vol_icon.src = "./icons/volume-level-3.svg";
   }
 }
 
-
-
-
-function clear(){
-  var z=document.getElementsByTagName("button")[1];
+function clear() {
+  var z = document.getElementsByTagName("button")[1];
   z.addEventListener('click', function () {
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     document.getElementById('text-top').value = "";
     document.getElementById('text-bottom').value = "";
 
     let buttonsToActivate = document.getElementById("button-group").children;
-    for(var i = 0; i < buttonsToActivate.length; i ++){
+    for (var i = 0; i < buttonsToActivate.length; i++) {
       buttonsToActivate[i].disabled = true;
     }
     document.querySelector('button[type=submit]').disabled = false;
@@ -136,23 +125,21 @@ function clear(){
   }, false);
 }
 
-
-function speak(){
-  
-  document.getElementsByTagName("button")[2].disabled=true;
-  var z=document.getElementsByTagName("button")[2];
+function speak() {
+  document.getElementsByTagName("button")[2].disabled = true;
+  var z = document.getElementsByTagName("button")[2];
   z.addEventListener('click', function () {
-    var text=document.getElementById('text-top').value + document.getElementById('text-bottom').value;
-   console.log(text);
-    if(text!== ''){
+    var text = document.getElementById('text-top').value + document.getElementById('text-bottom').value;
+    console.log(text);
+    if (text !== '') {
       var voiceSelect = document.getElementById("voice-selection");
       var synth = window.speechSynthesis;
 
       var voices = synth.getVoices();
       var utterThis = new SpeechSynthesisUtterance(text);
       var selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
-      for(var i = 0; i < voices.length ; i++) {
-        if(voices[i].name === selectedOption) {
+      for (var i = 0; i < voices.length; i++) {
+        if (voices[i].name === selectedOption) {
           utterThis.voice = voices[i];
         }
       }
@@ -162,27 +149,21 @@ function speak(){
   }, false);
 }
 
-
-
 function populateVoiceList() {
   var synth = window.speechSynthesis;
   var voices = synth.getVoices();
 
-
   var voiceSelect = document.getElementById("voice-selection");
   document.getElementById("voice-selection").disabled = false;
-  
-  
 
   voiceSelect.options[0] = null;
 
-  for(var i = 0; i < voices.length ; i++) {
+  for (var i = 0; i < voices.length; i++) {
     var option = document.createElement('option');
     option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
-    if(voices[i].default) {
+    if (voices[i].default) {
       option.textContent += ' -- DEFAULT';
     }
-
     option.setAttribute('data-lang', voices[i].lang);
     option.setAttribute('data-name', voices[i].name);
     voiceSelect.appendChild(option);
@@ -192,7 +173,3 @@ function populateVoiceList() {
 if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
   speechSynthesis.onvoiceschanged = populateVoiceList;
 }
-
-  
-
-
