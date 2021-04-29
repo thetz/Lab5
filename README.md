@@ -10,4 +10,4 @@ https://thetz.github.io/Lab5/
 
 ## Part 2:
 
-https://github.com/thetz/github-actions-for-ci.git
+https://github.com/thetz/github-actions-for-ci/issues/7
