@@ -5,9 +5,13 @@ const img = new Image(); // used to load image from <input> and draw to canvas
 const imageInput = document.getElementById("image-input");
 const form = document.getElementById("generate-meme")
 // Fires whenever the img object loads a new image (such as with img.src =)
+
 img.addEventListener('load', () => {
   // TODO
 
+  let dimensions = getDimensions(context.canvas.width, context.canvas.height, img.width, img. height);
+  context.drawImage(img, dimensions.width, dimensions.height, dimensions.startX, dimensions.startY);
+  console.log(dimensions);
   // Some helpful tips:
   // - Fill the whole Canvas with black first to add borders on non-square images, then draw on top
   // - Clear the form when a new image is selected
@@ -15,10 +19,16 @@ img.addEventListener('load', () => {
 });
 
 imageInput.addEventListener("input", () => {
+  console.log(imageInput.files[0]);
   img.src = URL.createObjectURL(imageInput.files[0]);
+  img.alt = imageInput.files[0].name;
 });
 
 form.addEventListener('submit', () => {
+  
+  console.log(img.width);
+  console.log(img.height);
+  
   textTop = document.getElementById("text-top");
   textBottom = document.getElementById("text-bottom");
 
@@ -36,7 +46,7 @@ form.addEventListener('submit', () => {
  * and also the starting X and starting Y coordinate to be used when you draw the new image to the
  * Canvas. These coordinates align with the top left of the image.
  */
-function getDimmensions(canvasWidth, canvasHeight, imageWidth, imageHeight) {
+function getDimensions(canvasWidth, canvasHeight, imageWidth, imageHeight) {
   let aspectRatio, height, width, startX, startY;
 
   // Get the aspect ratio, used so the picture always fits inside the canvas
