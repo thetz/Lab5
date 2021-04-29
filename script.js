@@ -3,12 +3,16 @@ const canvas = document.getElementById('user-image');
 const context = canvas.getContext('2d');
 const img = new Image(); // used to load image from <input> and draw to canvas
 const imageInput = document.getElementById("image-input");
-const form = document.getElementById("generate-meme")
+const form = document.getElementById("generate-meme");
+
 // Fires whenever the img object loads a new image (such as with img.src =)
 
 img.addEventListener('load', () => {
   // TODO
 
+  // console.log(img.src);
+  context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+  context.fillStyle = "#000000";
   let dimensions = getDimensions(context.canvas.width, context.canvas.height, img.width, img. height);
   context.drawImage(img, dimensions.width, dimensions.height, dimensions.startX, dimensions.startY);
   console.log(dimensions);
@@ -19,20 +23,31 @@ img.addEventListener('load', () => {
 });
 
 imageInput.addEventListener("input", () => {
-  console.log(imageInput.files[0]);
+  // console.log(imageInput.files[0]);
   img.src = URL.createObjectURL(imageInput.files[0]);
   img.alt = imageInput.files[0].name;
+  // console.log(img.alt);
 });
 
-form.addEventListener('submit', () => {
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
   
-  console.log(img.width);
-  console.log(img.height);
-  
-  textTop = document.getElementById("text-top");
-  textBottom = document.getElementById("text-bottom");
+  let textTop = document.getElementById("text-top").value;
+  let textBottom = document.getElementById("text-bottom").value;
 
-  document.querySelector("#button-group > button").disabled = true;
+  // console.log(textTop);
+
+  context.font = "48px serif";
+  context.textAlign = "center";
+  context.fillText(textTop, context.canvas.width/2, 35);
+  context.fillText(textBottom, context.canvas.width/2, context.canvas.height - 35);
+
+
+  let buttonsToActivate = document.getElementById("button-group").children;
+  for(var i = 0; i < buttonsToActivate.length; i ++){
+    buttonsToActivate[i].disabled = false;
+  }
+  document.querySelector('button[type=submit]').disabled = true;
 });
 
 /**
